@@ -1,18 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
-    <TextView
-            android:hint="name"
-            android:layout_margin="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="16dp"
-            tools:layout_editor_absoluteX="16dp" android:id="@+id/name"/>
-    <TextView
-            android:hint="description"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             xmlns:tools="http://schemas.android.com/tools">
+
+
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_below="@id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="44dp"
-            tools:layout_editor_absoluteX="16dp" android:id="@+id/description"/>
-</RelativeLayout>
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            app:cardCornerRadius="12dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#30ABC5"
+                        tools:text="Name of repo" />
+
+                <TextView
+                        android:id="@+id/date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        tools:text="19/04/2018" />
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:backgroundTint="#30ABC5"
+                  android:layout_marginTop="4dp"
+                  android:layout_marginBottom="4dp"/>
+
+            <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center_vertical"
+                    android:textSize="18sp"
+                    tools:text="Multi line description, text and more text then text
+add more text more of a description. Multi line
+description, text and more text then text add
+more text more of a description." />
+
+            <LinearLayout android:id="@+id/lang_layout" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" android:gravity="right">
+                <TextView android:layout_width="wrap_content" android:layout_height="match_parent"
+                          tools:text="Java" android:gravity="center" android:id="@+id/lang"/>
+                <android.support.v7.widget.CardView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="4dp"
+                        app:cardCornerRadius="8dp" app:cardBackgroundColor="#E03F3F" android:id="@+id/lang_col"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

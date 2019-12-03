@@ -9,6 +9,8 @@ data class JsonObject(
     var description : String? = null,
     @SerializedName("language")
     var language : String? = null,
+    @SerializedName("created_at")
+    var date : String? = null,
     @SerializedName("html_url")
     var repoUrlString : String? = null
 )

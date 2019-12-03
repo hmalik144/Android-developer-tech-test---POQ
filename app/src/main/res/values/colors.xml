@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#30ABC5</color>
+    <color name="colorPrimaryDark">#247E91</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="Ruby">#701516</color>
+    <color name="Java">#b07219</color>
+    <color name="ObjectiveC">#438eff</color>
+    <color name="JavaScript">#f1e05a</color>
+    <color name="CSS">#563d7c</color>
+    <color name="Shell">#89e051</color>
+
+
 </resources>
