@@ -11,13 +11,13 @@ Permissions : Internet
 
  - Swipe to refresh view
  - Search option
- - Sort option
+ - Open repo on click
+ - Display language of repo (if available)
 
 ## Espresso UI tests
 
 ### Test case one
  - Testing listview population
- - Testing swipe to refresh
 
 ### Test case two
  - Testing filter list in searchview
@@ -25,8 +25,8 @@ Permissions : Internet
  
 ## Built With
 
-* [Gson](https://github.com/google/gson) - A Java serialization/deserialization library to convert Java Objects into JSON and back
-* [OkHttp](https://square.github.io/okhttp/) - An HTTP client for Android, Kotlin, and Java.
+* [RxJava](https://github.com/ReactiveX/RxJava) - RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.
+* [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc
 
 ## Authors
 
