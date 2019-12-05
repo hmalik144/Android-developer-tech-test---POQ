@@ -4,7 +4,7 @@ A list of all the github repos of Square. This android app shows a list of all c
 
 ## Requirements
 
-Minimum android SDK version 15, Android 4.0.3 (Icecream Sandwich)
+Minimum android SDK version 23, Android 6.0.0 (Marshmellow)
 Permissions : Internet
 
 ## Features
