@@ -1,21 +1,20 @@
-package com.example.h_mal.myapplication
+package com.example.h_mal.myapplication.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
-import android.net.UrlQuerySanitizer
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Filter
-import com.example.h_mal.myapplication.model.JsonObject
+import com.example.h_mal.myapplication.R
+import com.example.h_mal.myapplication.model.Repo
 import kotlinx.android.synthetic.main.repo_list_item.view.*
 
 //custom list adapter extends from array adater
-class ListViewAdapter(context: Context, objects: MutableList<JsonObject>) :
-    ArrayAdapter<JsonObject>(context, 0, objects){
+class ListViewAdapter(context: Context, objects: MutableList<Repo>) :
+    ArrayAdapter<Repo>(context, 0, objects){
 
     //populate each view
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -36,8 +35,15 @@ class ListViewAdapter(context: Context, objects: MutableList<JsonObject>) :
         val dateString = item?.date?.split('T')?.get(0)
         view.date?.text = dateString
 
+        //control the language section of the view
+        populateLanguage(item, view)
+
+        return view
+    }
+
+    fun populateLanguage(item : Repo?, view : View){
         //check if the language object is null
-        if (item.language != null){
+        if (item?.language != null){
             //language exists in object
             //view holdin the language to be visible
             view.lang_layout.visibility = View.VISIBLE
@@ -49,25 +55,6 @@ class ListViewAdapter(context: Context, objects: MutableList<JsonObject>) :
             //language was null therefore view to be hidden
             view.lang_layout.visibility = View.GONE
         }
-
-        //apply on click listener to item
-        view.setOnClickListener{
-            //click item opens then url
-            openLink(item.repoUrlString)
-        }
-
-        return view
-    }
-
-    //function for opening the link
-    fun openLink(urlString : String?){
-        //open link to repo if the url is not nu;;
-        if (urlString != null){
-            val openURL =  Intent(Intent.ACTION_VIEW)
-            openURL.data = Uri.parse(urlString)
-            context.startActivity(openURL)
-        }
-
     }
 
     //get the corresponding colour based on the programming language
@@ -83,4 +70,19 @@ class ListViewAdapter(context: Context, objects: MutableList<JsonObject>) :
             else -> null
         }
     }
+
+    //function for opening the link
+    fun openLink(position: Int){
+        val urlString = getItem(position)?.html_url
+        //open link to repo if the url is not null
+        if (urlString != null){
+            val openURL =  Intent(Intent.ACTION_VIEW)
+            openURL.addFlags(FLAG_ACTIVITY_NEW_TASK)
+            openURL.data = Uri.parse(urlString)
+            context.startActivity(openURL)
+        }
+
+    }
+
+
 }

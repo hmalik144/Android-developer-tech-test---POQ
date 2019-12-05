@@ -2,15 +2,9 @@ package com.example.h_mal.myapplication.model
 
 import com.google.gson.annotations.SerializedName
 
-data class JsonObject(
-    @SerializedName("name")
+data class Repo(
     var name: String? = null,
-    @SerializedName("description")
     var description : String? = null,
-    @SerializedName("language")
     var language : String? = null,
-    @SerializedName("created_at")
     var date : String? = null,
-    @SerializedName("html_url")
-    var repoUrlString : String? = null
-)
+    var html_url : String? = null)
