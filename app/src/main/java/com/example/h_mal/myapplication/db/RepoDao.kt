@@ -11,7 +11,7 @@ import com.example.h_mal.myapplication.model.Repo
 interface RepoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAllRepos(repos : List<Repo>)
+    fun saveAllRepos(repos : List<Repo>) : List<Long>
 
     @Query("SELECT * FROM Repo")
     fun getRepos() : LiveData<List<Repo>>

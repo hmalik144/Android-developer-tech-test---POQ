@@ -1,35 +1,46 @@
-package com.example.h_mal.myapplication
+package com.example.h_mal.myapplication.ui
 
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.filters.LargeTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.view.ViewGroup
-import com.example.h_mal.myapplication.ui.MainActivity
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
+import com.example.h_mal.myapplication.R
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.anything
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@LargeTest
+
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class UiTest {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun mainActivityTest() {
-
+    fun uiTest() {
+        val frameLayout = onData(anything())
+            .inAdapterView(
+                allOf(
+                    withId(R.id.list_view),
+                    childAtPosition(
+                        withId(R.id.swipe_refresh),
+                        0
+                    )
+                )
+            )
+            .atPosition(0)
+        frameLayout.perform(click())
     }
 
     private fun childAtPosition(
