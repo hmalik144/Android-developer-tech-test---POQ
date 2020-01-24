@@ -1,45 +1,76 @@
 package com.example.h_mal.myapplication.ui
 
-import android.support.v7.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.View
-import android.widget.SearchView
-import com.example.h_mal.myapplication.Api.GetData
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.h_mal.myapplication.R
-import com.example.h_mal.myapplication.model.Repo
+import com.example.h_mal.myapplication.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import io.reactivex.disposables.CompositeDisposable
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.Retrofit
-
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), KodeinAware {
     lateinit var searchView: SearchView
-    lateinit var myCompositeDisposable: CompositeDisposable
+    lateinit var adapterLV: ListViewAdapter
 
-    val urlString = "https://api.github.com/orgs/square/"
+    override val kodein by kodein()
+
+    private val factory: DefaultViewFactory by instance()
+
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        spinner.visibility = View.VISIBLE
+        viewModel = ViewModelProviders.of(this,factory).get(MainViewModel::class.java)
 
-        myCompositeDisposable = CompositeDisposable()
-
-        //begin populating list
-        loadData()
-
+        bindUI()
         //set a listener for the swipe to refresh
         swipe_refresh.setOnRefreshListener(swipeRefreshListener)
     }
+
+    private fun bindUI() = CoroutineScope(Dispatchers.Main).launch {
+        spinner.visibility = View.VISIBLE
+
+        viewModel.repos.await().observe(this@MainActivity, Observer {
+            spinner.visibility = View.GONE
+
+            if (it.isEmpty()){
+                empty_view.visibility = View.VISIBLE
+                searchView.setOnQueryTextListener(null)
+            }else{
+                empty_view.visibility = View.GONE
+
+                adapterLV = ListViewAdapter(baseContext, it.toMutableList())
+                //apply adapter to listview
+                list_view.adapter = adapterLV
+
+                list_view.setOnItemClickListener { parent, view, position, id ->
+                    adapterLV.openLink(position)
+                }
+
+                //search view has its query change listener applied
+                searchView.setOnQueryTextListener(queryListener)
+            }
+
+
+        })
+    }
+
+
 
     //implement search interface in the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,92 +84,27 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        myCompositeDisposable?.clear()
-    }
-
     val swipeRefreshListener = SwipeRefreshLayout.OnRefreshListener{
         //populate list when pulling to refresh
-//        callData()
-        loadData()
+        bindUI()
+
     }
 
-    fun loadData(){
-        //clear list before populating
-        list_view.adapter = null
+    val queryListener = object : SearchView.OnQueryTextListener{
 
-        val requestInterface = Retrofit.Builder()
-            .baseUrl(urlString)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build().create(GetData::class.java)
+        override fun onQueryTextSubmit(query: String?): Boolean {
 
-        myCompositeDisposable.add(requestInterface.getData()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribeWith(object : DisposableObserver<List<Repo>>() {
-                override fun onNext(t: List<Repo>) {
-                    handleResponse(t)
-                }
-
-                override fun onComplete() {
-
-                }
-
-                override fun onError(e: Throwable) {
-                    handleError()
-                }
-            }))
-    }
-
-    private fun handleResponse(objectList: List<Repo>) {
-
-        spinner.visibility = View.GONE
-
-        //if swipe refresh is refreshing then stop
-        swipe_refresh.isRefreshing = false
-
-        if (objectList.isNotEmpty()){
-            //list is not empty
-            empty_view.visibility = View.GONE
-            //custom list view adapter created
-            val adapterLV = ListViewAdapter(baseContext, objectList.toMutableList())
-            //apply adapter to listview
-            list_view.adapter = adapterLV
-
-            list_view.setOnItemClickListener { parent, view, position, id ->
-                adapterLV.openLink(position)
-            }
-
-            //search view has its query change listener applied
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-
-                override fun onQueryTextSubmit(query: String?): Boolean {
-
-                    return true
-                }
-
-                //as the test is changed the list is filtered
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    //filter list function
-                    adapterLV.filter.filter(newText)
-
-                    return true
-                }
-            })
+            return true
         }
 
+        //as the test is changed the list is filtered
+        override fun onQueryTextChange(newText: String?): Boolean {
+            //filter list function
+            adapterLV.filter.filter(newText)
+
+            return true
+        }
     }
 
-    fun handleError(){
-        //if swipe refresh is refreshing then stop
-        swipe_refresh.isRefreshing = false
-        //list is empty
-        empty_view.visibility = View.VISIBLE
-        //progress bar hidden
-        spinner.visibility = View.GONE
-    }
 
 }

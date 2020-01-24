@@ -6,7 +6,7 @@
              xmlns:tools="http://schemas.android.com/tools">
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -68,7 +68,7 @@ more text more of a description." />
             android:layout_marginTop="6dp" android:gravity="right">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                           tools:text="Java" android:gravity="center" android:id="@+id/lang"/>
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="4dp"
@@ -79,6 +79,6 @@ more text more of a description." />
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>

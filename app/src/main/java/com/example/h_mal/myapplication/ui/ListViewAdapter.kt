@@ -1,5 +1,6 @@
 package com.example.h_mal.myapplication.ui
 
+
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -50,7 +51,9 @@ class ListViewAdapter(context: Context, objects: MutableList<Repo>) :
 
             //language text and corresponding colour according to github is applied
             view.lang?.text = item.language
-            getColor(item.language)?.let { it1 -> view.lang_col.setCardBackgroundColor(it1) }
+
+
+            getColor(item.language)?.let { it1 -> view.lang_col.setBackgroundColor(it1) }
         }else{
             //language was null therefore view to be hidden
             view.lang_layout.visibility = View.GONE
