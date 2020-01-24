@@ -14,18 +14,25 @@ Permissions : Internet
  - Open repo on click
  - Display language of repo (if available)
 
-## Espresso UI tests
+## Architectural Pattern
+
+MVVM - Model View Viewmodel
+
+## Jetpack
+
+* [AndroidX](https://developer.android.com/jetpack)
+
+## Unit tests
 
 ### Test case one
- - Testing listview population
+ - Testing of room database queries
 
 ### Test case two
- - Testing filter list in searchview
- - Testing sort feature from menu
+ - Testing Repository
  
 ## Built With
 
-* [RxJava](https://github.com/ReactiveX/RxJava) - RxJava – Reactive Extensions for the JVM – a library for composing asynchronous and event-based programs using observable sequences for the Java VM.
+* [Kodein](https://github.com/Kodein-Framework/Kodein-DI)
 * [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc
 
 ## Authors
