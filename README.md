@@ -32,7 +32,7 @@ MVVM - Model View Viewmodel
  
 ## Built With
 
-* [Kodein](https://github.com/Kodein-Framework/Kodein-DI)
+* [Kodein](https://github.com/Kodein-Framework/Kodein-DI) - Painless Kotlin Dependency Injection
 * [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc
 
 ## Authors
