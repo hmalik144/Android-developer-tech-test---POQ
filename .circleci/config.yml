@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-    - image: circleci/android:api-29-alpha
+    - image: circleci/android:api-29
     environment:
     - CIRCLE_COMPARE_URL: https://github.com/hmalik144/SquareGithubRepo/compare/d44aa77b0a5382f4365ded4068397857333b48e7...9aa146df2b9eaa36e6e942cec657abf3100eba20
     - JVM_OPTS: -Xmx3200m
