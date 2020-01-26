@@ -70,7 +70,10 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         })
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
+    }
 
     //implement search interface in the menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
